@@ -14,10 +14,14 @@
 * Invoking `processFirstItem` passing `['foo', 'bar']` and `(str) => str + str`,
 * should return 'foofoo'.
 */
+function upper(x) {
+  return x.toUpperCase(x);
+}
+
 function processFirstItem(stringList, callback) {
   return callback(stringList[0]);
 }
-processFirstItem(`['foo', 'bar']`);
+console.log(processFirstItem(['foo', 'bar'], upper));
 
 // ⭐️ Example Challenge END ⭐️
 
@@ -28,7 +32,7 @@ processFirstItem(`['foo', 'bar']`);
 * Study the code for counter1 and counter2. Answer the questions below.
 *
 * 1. What is the difference between counter1 and counter2?
-In counter1, let is block scoped, is using hoisting and function counter is not defined.
+In counter1, let is block scoped, is using hoisting.
 In counter2, let is global scoped, and is using hoisting.
 *
 * 2. Which of the two uses a closure? How can you tell?
@@ -81,16 +85,18 @@ finalScore(inning, 9) might return:
 
 */
 
-function finalScore(inning, inningNumber, callback){
-  callback(inning + inning);
-  let obj = {
-    home = 'Home',
-    away = 'Away'
+function finalScore(inning, numberOfInnings){
+  let rv = {
+    'Home': 0,
+    'Away': 0
   }
-  return obj;
+  for (let i=0; i<numberOfInnings; i++) {
+    rv['Home'] += inning();
+    rv['Away'] += inning();
+  }
+  return rv;
 }
-console.log finalScore(`('Home': ${inning})`);
-console.log finalScore(`('Away': ${inning})`);
+console.log(finalScore(inning, 3));
 /* Task 4:
 
 Create a function called `scoreboard` that accepts the following parameters:
@@ -112,17 +118,27 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(inning, callback) {
-  let home = 0;
-  let away = 0;
-  inningNumber = 0;
-  return function final() {
-    home = callback() + home;
-    away = callback() + away;
-    inningNumber++;
-    return `${inningNumber}inning: ${home} - ${away}`);
+function scoreboard(inning, numberOfInnings) {
+  let rv = []; // ['1st inning: 0 - 2', '2nd inning: 1 - 3', '3rd inning: 1 - 3']
+  let score = {
+    'Home': 0,
+    'Away': 0
   }
+  for (let i=0; i<numberOfInnings; i++) {
+    score['Home'] += inning();
+    score['Away'] += inning();
+    let suffix = "th";
+    if (i === 0) {
+      suffix = "st";
+    } else if (i === 1) {
+      suffix = "nd";
+    } else if (i === 2) {
+      suffix = "rd";
+    } else {
+      suffix = "th";
+    }
+    rv.push(`${i+1}${suffix} inning: ${score['Home']}-${score['Away']}`);
+  }
+  return rv;
 }
-const baseballGame = scoreboard(inning,9);
-console.log(baseballGame());
-console.log(baseballGame());
+console.log(scoreboard(inning, 9));
