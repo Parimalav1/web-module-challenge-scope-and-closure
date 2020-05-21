@@ -17,7 +17,7 @@ This challenge focuses on both scope and closures.
 
 In this challenge you will be working to build a `scoreboard` (in the console) that takes randomly generated data and keeps track of a game's progress. If you're not familiar with the rules of baseball what you need to know is this: there are 9 innings and teams take turns "at-bat." Teams can only score while they are at bat. A team stops being at bat once they have gotten 3 `outs` by either striking out or through game play. You can read more about baseball rules [here](https://www.rulesofsport.com/sports/baseball.html).
 
-A scoreboard in a major league stadium looks something like this. In fact, the scoreboard at Fenway Park in Boston is actually quite famous. 
+A scoreboard in a major league stadium looks something like this. In fact, the scoreboard at Fenway Park in Boston is actually quite famous.
 
 ![Fenway Scoreboard](https://storage.googleapis.com/afs-prod/media/media:e959506330fd4e5890023c93cfbaac55/800.jpeg)
 
@@ -42,6 +42,8 @@ Find the file `index.js` and complete the tasks.
 Edit the `ReadMe` file with your answers.
 
 1. In your own words, define closure (1-2 sentences).
+Closure is an important JavaScript concept in which functions and lexical scoping is used to give nested scoping, put functions together, to find code, or to pass scoping  down.
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -63,8 +65,13 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+Closure is used on the line #50, after the name(parameter). It can be identified by curly brackets.
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
-c. What is the lexical scope of `newRoll`? 
+Parameter dansRoll() is always the same. The rolling number.
+
+c. What is the lexical scope of `newRoll`?
+Variable-const, name-newRoll, value-Math.floor(Math.random() * 6); function-function personalDice(name){}.
 
 ### Task 3 - Stretch Goals
 
@@ -85,7 +92,15 @@ console.log("b defined? " + (typeof b !== 'undefined'));
 2. Write a function that would allow you to do this using a closure. (This is another interview question we've seen before - when you're ready for answers, view an explanation [here](https://www.coderbyte.com/algorithm/3-common-javascript-closure-questions)).
 
 ```js
+function createBase(b) {
+  return function(x) {
+    return b + x;
+  }
+}
 var addSix = createBase(6);
+var addSix = function(x) { return 6 + x};
+var addSeven = createBase(7);
+var addSeven = function(x) { return 7 + x};
 addSix(10); // returns 16
 addSix(21); // returns 27
 ```
